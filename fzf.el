@@ -97,13 +97,8 @@
          (linenumber (pop selected)))
     (kill-buffer "*fzf*")
     (jump-to-register :fzf-windows)
-    (when (file-exists-p file)
-      (find-file file))
-    (when linenumber
-      (goto-char (point-min))
-      (forward-line (- (string-to-number linenumber) 1))
-      (back-to-indentation)))
-  (advice-remove 'term-handle-exit #'fzf/after-term-handle-exit))
+    (find-file (string-trim file))
+    (advice-remove 'term-handle-exit #'fzf/after-term-handle-exit)))
 
 (defun fzf/start (directory &optional cmd-stream)
   (require 'term)
